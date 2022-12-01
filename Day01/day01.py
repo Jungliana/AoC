@@ -3,6 +3,7 @@ def load_data(path):
         data = file.read()
     return data.split("\n")
 
+
 def sum_calories(data):
     calories = 0
     elf_calories = []
@@ -16,8 +17,15 @@ def sum_calories(data):
     return elf_calories
 
 
+def solve_part1(numbers):
+    return max(sum_calories(numbers))
+
+
+def solve_part2(numbers):
+    return sum(sorted(sum_calories(numbers), reverse=True)[0:3])
+
+
 if __name__ == "__main__":
     numbers = load_data("Day01/input01.txt")
-    print(max(sum_calories(numbers)))
-    calories_list = sum_calories(numbers)
-    print(sum(sorted(calories_list, reverse=True)[0:3]))
+    print(f'Part 1 solution: {solve_part1(numbers)}')
+    print(f'Part 2 solution: {solve_part2(numbers)}')
