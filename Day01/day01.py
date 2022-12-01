@@ -1,11 +1,7 @@
 def load_data(path):
     with open(path) as file:
-        data = file.readlines()
-    stripped = []
-    for element in data:
-        stripped.append(element.rstrip())
-    stripped.append('')
-    return stripped
+        data = file.read()
+    return data.split("\n")
 
 def sum_calories(data):
     calories = 0
