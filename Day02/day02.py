@@ -1,4 +1,5 @@
 """Day02 - puzzle solutions for day 02."""
+from collections.abc import Callable
 
 
 def load_data(path: str) -> list[str]:
@@ -12,7 +13,7 @@ def load_data(path: str) -> list[str]:
 
 # A, X - rock (1); B, Y - paper (2); C, Z - scissors (3)
 # 0 - loss, 3 - draw, 6 - win
-def point_dict(play_round: str) -> int:
+def point_dict_1(play_round: str) -> int:
     """Read round result from dictionary."""
     points = {'A X': 4,
               'B X': 1,
@@ -26,11 +27,11 @@ def point_dict(play_round: str) -> int:
     return points[play_round]
 
 
-def solve_part1(letters: list[str]) -> int:
-    """Solve part 1 of the puzzle."""
+def solve(letters: list[str], chosen_dict: Callable[[list[str]], int]) -> int:
+    """Count points using chosen dictionary."""
     result = 0
     for line in letters:
-        result += point_dict(line)
+        result += chosen_dict(line)
     return result
 
 
@@ -50,12 +51,14 @@ def point_dict_2(play_round: str) -> int:
     return points[play_round]
 
 
+def solve_part1(letters: list[str]) -> int:
+    """Solve part 2 of the puzzle."""
+    return solve(letters, point_dict_1)
+
+
 def solve_part2(letters: list[str]) -> int:
     """Solve part 2 of the puzzle."""
-    result = 0
-    for line in letters:
-        result += point_dict_2(line)
-    return result
+    return solve(letters, point_dict_2)
 
 
 if __name__ == "__main__":
