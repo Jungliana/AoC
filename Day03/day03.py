@@ -27,7 +27,22 @@ def sum_points(all_backpacks):
     return points
 
 
+def find_badge(back1, back2, back3):
+    for item in back1:
+        if (item in back2) and (item in back3):
+            return LETTER_LIST.index(item)+1
+
+
+def solve_part2(all_backpacks):
+    i = 0
+    points = 0
+    while i < len(all_backpacks):
+        points += find_badge(all_backpacks[i], all_backpacks[i+1], all_backpacks[i+2])
+        i += 3
+    return points
+
+
 if __name__ == "__main__":
     data = load_data("Day03/input03.txt")
     print(f'Part 1 answer: {sum_points(data)}')
-    # print(f'Part 2 answer: {solve_part2(data)}')
+    print(f'Part 2 answer: {solve_part2(data)}')
