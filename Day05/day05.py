@@ -55,15 +55,11 @@ class CrateMover9000():
 class CrateMover9001(CrateMover9000):
     """Crane for moving crates. But better."""
 
-    def __init__(self) -> None:
-        """Construct a crane with starting crate configuration."""
-        super().__init__()
-
     def move_crates(self, many: int, m_from: int, m_to: int) -> None:
         """Move x crates from one stack to another at one time."""
-        crates = self.crates[m_from][-many:]
+        cargo = self.crates[m_from][-many:]
         self.crates[m_from] = self.crates[m_from][:many]
-        self.crates[m_to] += crates
+        self.crates[m_to] += cargo
 
 
 if __name__ == "__main__":
