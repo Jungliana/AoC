@@ -28,25 +28,25 @@ class Crane():
             ['L', 'D', 'T', 'R', 'H', 'P', 'F', 'S']
         ]
 
-    def move_crates(self, many, m_from, m_to):
+    def move_crates(self, many: int, m_from: int, m_to: int) -> None:
         """Move x crates from one stack to another."""
         for _ in range(many):
             crate = self.crates[m_from].pop()
             self.crates[m_to].append(crate)
 
-    def move_all(self, lines):
+    def move_all(self, lines: list[list[str]]) -> None:
         """Move all crates according to the instructions."""
         for line in lines:
             self.move_crates(int(line[1]), int(line[3]), int(line[5]))
 
-    def read_message(self):
+    def read_message(self) -> str:
         """Read message from crate stacks."""
         message = ''
         for i in range(1, 10):
             message += self.crates[i].pop()
         return message
 
-    def solve_part1(self, lines):
+    def solve_part1(self, lines: list[list[str]]) -> str:
         """Solve part 1 of the puzzle."""
         self.move_all(lines)
         return self.read_message()
