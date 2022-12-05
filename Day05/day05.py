@@ -10,7 +10,7 @@ def load_data(path: str) -> list[str]:
     return lines
 
 
-class Crane():
+class CrateMover9000():
     """Crane for moving crates."""
 
     def __init__(self) -> None:
@@ -46,14 +46,29 @@ class Crane():
             message += self.crates[i].pop()
         return message
 
-    def solve_part1(self, lines: list[list[str]]) -> str:
-        """Solve part 1 of the puzzle."""
+    def solve(self, lines: list[list[str]]) -> str:
+        """Solve the puzzle."""
         self.move_all(lines)
         return self.read_message()
 
 
+class CrateMover9001(CrateMover9000):
+    """Crane for moving crates. But better."""
+
+    def __init__(self) -> None:
+        """Construct a crane with starting crate configuration."""
+        super().__init__()
+
+    def move_crates(self, many: int, m_from: int, m_to: int) -> None:
+        """Move x crates from one stack to another at one time."""
+        crates = self.crates[m_from][-many:]
+        self.crates[m_from] = self.crates[m_from][:many]
+        self.crates[m_to] += crates
+
+
 if __name__ == "__main__":
     data = load_data("Day05/input05_b.txt")
-    crane1 = Crane()
-    print(f'Part 1 answer: {crane1.solve_part1(data)}')
-    # print(f'Part 2 answer: {solve_part2(data)}')
+    crane1 = CrateMover9000()
+    print(f'Part 1 answer: {crane1.solve(data)}')
+    crane2 = CrateMover9001()
+    print(f'Part 2 answer: {crane2.solve(data)}')
