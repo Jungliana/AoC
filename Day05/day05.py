@@ -57,8 +57,9 @@ class CrateMover9001(CrateMover9000):
 
     def move_crates(self, many: int, m_from: int, m_to: int) -> None:
         """Move x crates from one stack to another at one time."""
+        height = len(self.crates[m_from])
         cargo = self.crates[m_from][-many:]
-        self.crates[m_from] = self.crates[m_from][:many]
+        self.crates[m_from] = self.crates[m_from][:(height-many)]
         self.crates[m_to] += cargo
 
 
