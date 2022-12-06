@@ -7,16 +7,21 @@ def load_data(path: str) -> str:
         return file.readlines()[0]
 
 
-def all_charas_different(token):
-    return (token[0] not in token[1:]) and (token[-1] not in token[:-1]) and (token[1] != token[2])
+def all_charas_different(token: list) -> bool:
+    """Check if every item in a list is different."""
+    for i in range(len(token)-1):
+        if token[i] in token[i+1:]:
+            return False
+    return True
 
 
-def solve_part1(stream):
-    que = list(stream[0:4])
-    counter = 4
+def solve(stream: str, length: int) -> int:
+    """Solve part 1 and part 2 of the puzzle."""
+    que = list(stream[0:length])
+    counter = length
     if all_charas_different(que):
         return counter
-    for character in stream[4:]:
+    for character in stream[length:]:
         counter += 1
         que.pop(0)
         que.append(character)
@@ -27,5 +32,5 @@ def solve_part1(stream):
 
 if __name__ == "__main__":
     data = load_data("Day06/input06.txt")
-    print(f'Part 1 answer: {solve_part1(data)}')
-    # print(f'Part 2 answer: {solve_part2(data)}')
+    print(f'Part 1 answer: {solve(data, 4)}')
+    print(f'Part 2 answer: {solve(data, 14)}')
