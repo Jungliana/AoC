@@ -51,6 +51,6 @@ def solve_part2(range_list: list[list[str]]) -> int:
 
 
 if __name__ == "__main__":
-    data = load_data("Day04/input04.txt")
+    data = load_data("AoC-2022/Day04/input04.txt")
     print(f'Part 1 answer: {solve_part1(data)}')
     print(f'Part 2 answer: {solve_part2(data)}')

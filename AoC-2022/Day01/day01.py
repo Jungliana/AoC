@@ -33,6 +33,6 @@ def solve_part2(numbers: list[int]) -> int:
 
 
 if __name__ == "__main__":
-    data = load_data("Day01/input01.txt")
+    data = load_data("AoC-2022/Day01/input01.txt")
     print(f'Part 1 answer: {solve_part1(data)}')
     print(f'Part 2 answer: {solve_part2(data)}')

@@ -64,7 +64,7 @@ class CrateMover9001(CrateMover9000):
 
 
 if __name__ == "__main__":
-    data = load_data("Day05/input05_b.txt")
+    data = load_data("AoC-2022/Day05/input05_b.txt")
     crane1 = CrateMover9000()
     print(f'Part 1 answer: {crane1.solve(data)}')
     crane2 = CrateMover9001()
