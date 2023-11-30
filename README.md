@@ -1,4 +1,4 @@
-# AoC2022
-Solutions of puzzles from Advent of Code 2022
+# AoC
+Solutions of puzzles from Advent of Code
 ### Languages:
-- Python 3.9.7
+- Python 3.9.7 (2022)
