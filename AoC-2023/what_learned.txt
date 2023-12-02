@@ -1,0 +1,3 @@
+What I've learned:
+Day 01:
+- Python 're' module does not support overlapping matches. Use third-party 'regex' module for this.
