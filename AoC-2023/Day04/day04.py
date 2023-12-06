@@ -43,6 +43,6 @@ def solve_part2(data):
 
 
 if __name__ == "__main__":
-    data_input = read_data("AoC-2023/Day04/input04.txt")
+    data_input = read_data("AoC-2023/inputs/input04.txt")
     print(f'Part 1 solution: {solve_part1(data_input)}')
     print(f'Part 2 solution: {solve_part2(data_input)}')

@@ -46,7 +46,7 @@ def solve_part2(data):
 
 
 if __name__ == "__main__":
-    data_input = read_data("AoC-2023/Day02/input02.txt")
+    data_input = read_data("AoC-2023/inputs/input02.txt")
     color_nums = [("red", 12), ("green", 13), ("blue", 14)]
     print(f'Part 1 solution: {solve_part1(data_input, color_nums)}')
     print(f'Part 2 solution: {solve_part2(data_input)}')

@@ -58,6 +58,6 @@ def solve_part2(data: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    data_input = read_data("AoC-2023/Day01/input01.txt")
+    data_input = read_data("AoC-2023/inputs/input01.txt")
     print(f'Part 1 solution: {solve_part1(data_input)}')
     print(f'Part 2 solution: {solve_part2(data_input)}')
