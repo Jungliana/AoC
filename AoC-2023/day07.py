@@ -16,7 +16,7 @@ class Hand:
         self.card_values = self.translate_cards()
 
     def translate_cards(self) -> list[int]:
-        return [(Hand.CARD_DICT.get(n, n) if n in Hand.CARD_DICT else int(n)) for n in self.cards]
+        return [(self.CARD_DICT.get(n, n) if n in self.CARD_DICT else int(n)) for n in self.cards]
 
     def define_type(self) -> int:
         counter_dict = defaultdict(int)
@@ -50,6 +50,45 @@ class Hand:
         return self.type < other.type
 
 
+class JokerHand(Hand):
+    CARD_DICT = {"A": 14,
+                 "K": 13,
+                 "Q": 12,
+                 "J": 1,
+                 "T": 10}
+
+    def define_type(self) -> int:
+        counter_dict = defaultdict(int)
+        jokers = 0
+        for letter in self.cards:
+            if letter != "J":
+                counter_dict[letter] += 1
+            else:
+                jokers += 1
+
+        try:
+            max_card = max(counter_dict, key=counter_dict.get)
+        except ValueError:
+            return 7
+        counter_dict[max_card] += jokers
+        dict_len = len(counter_dict.keys())
+        dict_sorted = sorted(counter_dict.values())
+
+        if dict_len == 1:
+            return 7
+        if dict_len == 2:
+            if dict_sorted == [1, 4]:
+                return 6
+            return 5
+        if dict_len == 3:
+            if dict_sorted == [1, 1, 3]:
+                return 4
+            return 3
+        if dict_len == 4:
+            return 2
+        return 1
+
+
 def read_data(path: str) -> list[list[str]]:
     lines = []
     with open(path, encoding="ASCII") as file:
@@ -68,7 +107,12 @@ def solve_part1(data) -> int:
 
 
 def solve_part2(data):
-    pass
+    hand_objs = [JokerHand(data[0], data[1]) for data in data]
+    hand_objs.sort()
+    bet_sum = 0
+    for i, hand in enumerate(hand_objs):
+        bet_sum += (i+1) * hand.bet
+    return bet_sum
 
 
 if __name__ == "__main__":
