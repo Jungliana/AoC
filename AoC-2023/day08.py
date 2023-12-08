@@ -1,3 +1,6 @@
+from math import gcd
+
+
 def read_data(path: str) -> list[list[str]]:
     lines = []
     with open(path, encoding="ASCII") as file:
@@ -14,13 +17,15 @@ def build_node_dict(nodes) -> dict:
     return node_dict
 
 
-def solve_part1(data) -> int:
-    node_dict = build_node_dict(data[1])
-    hints = data[0]
-    current_node = 'AAA'
+def solve_part1(hints, node_dict) -> int:
+    return count_steps(node_dict, hints, 'AAA')
+
+
+def count_steps(node_dict, hints, node) -> int:
+    current_node = node
     counter = 0
 
-    while current_node != 'ZZZ':
+    while current_node[2] != 'Z':
         for letter in hints:
             if letter == 'L':
                 current_node = node_dict[current_node][0]
@@ -30,11 +35,18 @@ def solve_part1(data) -> int:
     return counter
 
 
-def solve_part2(data):
-    pass
+def solve_part2(hints, node_dict) -> int:
+    starting_nodes = list(filter(lambda x: x[2] == 'A', node_dict.keys()))
+    counters = [count_steps(node_dict, hints, node) for node in starting_nodes]
+
+    lcm = 1
+    for i in counters:
+        lcm = lcm*i // gcd(lcm, i)
+    return lcm
 
 
 if __name__ == "__main__":
-    data_input = read_data("AoC-2023/inputs/input08.txt")
-    print(f'Part 1 solution: {solve_part1(data_input)}')
-    print(f'Part 2 solution: {solve_part2(data_input)}')
+    data_hints, data_nodes = read_data("AoC-2023/inputs/input08.txt")
+    data_node_dict = build_node_dict(data_nodes)
+    print(f'Part 1 solution: {solve_part1(data_hints, data_node_dict)}')
+    print(f'Part 2 solution: {solve_part2(data_hints, data_node_dict)}')
