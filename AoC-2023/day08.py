@@ -1,0 +1,40 @@
+def read_data(path: str) -> list[list[str]]:
+    lines = []
+    with open(path, encoding="ASCII") as file:
+        for line in file:
+            lines.append(line.rstrip().split(" = "))
+    return lines[0][0], lines[2:]  # hints, nodes
+
+
+def build_node_dict(nodes) -> dict:
+    node_dict = {}
+    for line in nodes:
+        left_right = line[1].lstrip('(').rstrip(')').split(', ')
+        node_dict.update({line[0]: (left_right[0], left_right[1])})
+    return node_dict
+
+
+def solve_part1(data) -> int:
+    node_dict = build_node_dict(data[1])
+    hints = data[0]
+    current_node = 'AAA'
+    counter = 0
+
+    while current_node != 'ZZZ':
+        for letter in hints:
+            if letter == 'L':
+                current_node = node_dict[current_node][0]
+            else:
+                current_node = node_dict[current_node][1]
+            counter += 1
+    return counter
+
+
+def solve_part2(data):
+    pass
+
+
+if __name__ == "__main__":
+    data_input = read_data("AoC-2023/inputs/input08.txt")
+    print(f'Part 1 solution: {solve_part1(data_input)}')
+    print(f'Part 2 solution: {solve_part2(data_input)}')
