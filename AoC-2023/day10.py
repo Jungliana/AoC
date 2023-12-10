@@ -1,3 +1,6 @@
+from shapely.geometry import Polygon, Point
+
+
 def read_data(path: str) -> "PipeMatrix":
     pipe_cols = []
     with open(path, encoding="ASCII") as file:
@@ -44,12 +47,16 @@ class Pipe:
 
 
 class PipeMatrix:
+    VERTICES = ["F", "J", "L", "7"]
+
     def __init__(self, matrix: list[list[Pipe]]) -> None:
         self.matrix = matrix
         self.x_size: int = len(self.matrix[0])
         self.y_size: int = len(self.matrix)
         self.start: Pipe = self.find_start()
         self.define_start_shape()
+
+        self.loop_vertices = []
 
     def find_start(self) -> Pipe:
         return next(filter(lambda x: x.type == "S", self.flatten()))
@@ -61,12 +68,21 @@ class PipeMatrix:
         west = self.matrix[y][x-1].shape[1] if x > 0 else 0
         south = self.matrix[y+1][x].shape[0] if y+1 < self.y_size else 0
 
-        self.start.shape = (north, east, west, south)
+        dirs = (north, east, west, south)
+        self.start.shape = dirs
+        key_list = list(Pipe.SHAPE.keys())
+        val_list = list(Pipe.SHAPE.values())
+
+        position = val_list.index(dirs)
+        self.start.type = key_list[position]
 
     def loopey_loop(self) -> None:
         for i, value in enumerate(self.start.shape):
             if value == 1:
+                self.loop_vertices = []
                 current = self.start
+                if current.type in self.VERTICES:
+                    self.loop_vertices.append(current.coords)
                 self.start.come_from = i
                 counter = 1
                 current = self.next_pipe(self.start)
@@ -74,6 +90,8 @@ class PipeMatrix:
 
                 while current != self.start:
                     counter += 1
+                    if current.type in self.VERTICES:
+                        self.loop_vertices.append(current.coords)
                     current = self.next_pipe(current=current)
                     if current != self.start:
                         current.steps = min(current.steps, counter)
@@ -106,8 +124,21 @@ def solve_part1(data: PipeMatrix) -> int:
     return max(filter(lambda x: x.steps < 1000000, data.flatten())).steps
 
 
+def count_points_inside_polygon(vertices):
+    polygon = Polygon(vertices)
+    min_x, min_y, max_x, max_y = polygon.bounds
+    grid_points = [(x, y) for x in range(int(min_x), int(max_x) + 1) for y in range(int(min_y), int(max_y) + 1)]
+
+    n = 0
+    for point in grid_points:
+        if polygon.contains(Point(point)):
+            n += 1
+    return n
+
+
 def solve_part2(data: PipeMatrix) -> int:
-    return 0
+    data.loopey_loop()
+    return count_points_inside_polygon(data.loop_vertices)
 
 
 if __name__ == "__main__":
