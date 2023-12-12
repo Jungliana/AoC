@@ -31,6 +31,6 @@ def solve(stream: str, length: int) -> int:
 
 
 if __name__ == "__main__":
-    data = load_data("AoC-2022/Day06/input06.txt")
+    data = load_data("AoC-2022/inputs/input06.txt")
     print(f'Part 1 answer: {solve(data, 4)}')
     print(f'Part 2 answer: {solve(data, 14)}')

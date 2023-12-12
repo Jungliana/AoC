@@ -59,6 +59,6 @@ def solve_part2(all_backpacks):
 
 
 if __name__ == "__main__":
-    data = load_data("AoC-2022/Day03/input03.txt")
+    data = load_data("AoC-2022/inputs/input03.txt")
     print(f'Part 1 answer: {solve_part1(data)}')
     print(f'Part 2 answer: {solve_part2(data)}')
