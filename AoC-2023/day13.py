@@ -33,6 +33,29 @@ def find_mirror_line(rows: list[str]):
     return 0
 
 
+def count_diff(str1, str2):
+    count_diffs = 0
+    for a, b in zip(str1, str2):
+        if a != b:
+            count_diffs += 1
+    return count_diffs
+
+
+def find_mirror_line_smudge(rows: list[str]):
+    for i in range(len(rows) - 1):
+        errors = 0
+        idx1 = i
+        idx2 = i+1
+        while (idx1 >= 0) and (idx2 < len(rows)) and count_diff(rows[idx1], rows[idx2]) <= 1:
+            if count_diff(rows[idx1], rows[idx2]) == 1:
+                errors += 1
+            idx1 -= 1
+            idx2 += 1
+        if errors == 1 and ((idx1 == -1) or idx2 == (len(rows))):
+            return i + 1
+    return 0
+
+
 def solve_part1(rows: list[list[str]], columns: list[list[str]]) -> int:
     sum_rows_cols = 0
     for row in rows:
@@ -42,8 +65,13 @@ def solve_part1(rows: list[list[str]], columns: list[list[str]]) -> int:
     return sum_rows_cols
 
 
-def solve_part2(data: list[list[str]], columns: list[list[str]]) -> int:
-    return 0
+def solve_part2(rows: list[list[str]], columns: list[list[str]]) -> int:
+    sum_rows_cols = 0
+    for row in rows:
+        sum_rows_cols += 100 * find_mirror_line_smudge(row)
+    for col in columns:
+        sum_rows_cols += find_mirror_line_smudge(col)
+    return sum_rows_cols
 
 
 if __name__ == "__main__":
